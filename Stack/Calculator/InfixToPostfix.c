@@ -30,7 +30,7 @@ int WhoPrecOp(char op1,char op2){
 
 	}else if(op1Prec < op2Prec){
 
-		return 2;
+		return -1;
 
 	}else{
 
@@ -43,6 +43,7 @@ void ConvToRPNExp(char exp[]){
 	
 	Stack stack;
 	int expLen = strlen(exp);
+	printf("%d\n",expLen);
 	char *convExp = (char*)malloc(expLen+1); // memory that  contain after convert
 
 	int i,idx=0;
@@ -67,7 +68,8 @@ void ConvToRPNExp(char exp[]){
 					break;
 
 				case ')': // if ')' token 
-					while(1){ 
+					while(1){
+						printf("Spop in case ) in whileLoop\n"); 
 						popOp = SPop(&stack); // Pop
 
 						if(popOp == '(') // if opoOp is '('
@@ -79,6 +81,7 @@ void ConvToRPNExp(char exp[]){
 				case '+': case '-':
 				case '*': case '/':
 					while(!SIsEmpty(&stack) && WhoPrecOp(Speek(&stack),tok) >= 0){
+						printf("Spop in case +-*/ in whileLoop\n");
 						convExp[idx++] = SPop(&stack);
 					}
 			
